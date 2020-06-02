@@ -15,5 +15,5 @@ The following technologies are used:
 
 -Room
 
--multithreading
+-multithreading.
 
