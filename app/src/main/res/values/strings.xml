@@ -6,4 +6,8 @@
     <string name="notepad">Notepad</string>
     <string name="lets_create_new_note">Lets create new note!</string>
     <string name="notes_list">Notes list</string>
+
+    <string name="note_category_title_template">New %s note</string>
+    <string name="create_category_title">New category</string>
+    <string name="categories_list_title">Choose category</string>
 </resources>

@@ -13,6 +13,9 @@ interface NoteDao {
     @Delete
     suspend fun deleteNote(note: Note)
 
-    @Query("select*from notes")//* значит что нужно получить все поля
+    @Query("select*from notes ")//* значит что нужно получить все поля
     suspend fun getAllNotes(): List<Note>
+
+    @Query("select * from notes where id = :id")
+    suspend fun getNoteById(id:Long): Note
 }

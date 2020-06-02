@@ -1,12 +1,14 @@
-package com.example.notesapp.ui
+package com.example.notesapp.ui.notes
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import com.example.notesapp.R
 import com.example.notesapp.data.NoteRepository
+import com.example.notesapp.ui.notes.NotesAdapter
 import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -26,8 +28,23 @@ class ListFragment : Fragment(), CoroutineScope {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val repo = NoteRepository()
+        val adapter = NotesAdapter {
+            launch {
+                repo.deleteNote(it)
+            }
+        }
+        notesList.adapter = adapter
+
         launch {
-            notesList.adapter = NotesAdapter(repo.getAllNotes())
+            val categoriesWithNotes = repo.getCategoryWithNote()
+            adapter.addNotes(repo.getCategoryWithNote().first().notes)
+
+            val allCategoriesName = categoriesWithNotes.map { it.category.name }.toTypedArray()
+            dropDownMenu.adapter = ArrayAdapter(
+                context!!,
+                android.R.layout.simple_dropdown_item_1line,
+                allCategoriesName
+            )
         }
 
     }
